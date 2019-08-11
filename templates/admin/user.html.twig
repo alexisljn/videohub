@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ user.email }}{% endblock %}
+
+{% block body %}
+    <h1>{{ user.email }}</h1>
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+    <a href="{{ path('delete_user', {'id': user.id}) }}">Delete user</a>
+    <h2>Vidéos</h2>
+    {% for video in user.videos %}
+        {{ video.title }} <a href="{{ path('admin_user', {'id': user.id}) }}">Edit</a> - <a href="{{ path('delete_user', {'id': user.id}) }}">Delete</a>
+    {% endfor %}
+{% endblock %}

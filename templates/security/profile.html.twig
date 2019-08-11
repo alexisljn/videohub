@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block body %}
+    <h1>{{ user.email }}</h1>
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+
+    <h2>Vidéos</h2>
+    <h3>Published</h3>
+    {% for video in publishedVideos %}
+        {{ video.title }} <a href="{{ path('edit_video', {'id':video.id}) }}">Edit</a> - <a href="{{ path('delete_video', {'id':video.id}) }}">Delete</a>
+    {% endfor %}
+    <h3>Unpublished</h3>
+    {% for video in unpublishedVideos %}
+        {{ video.title }} <a href="{{ path('edit_video', {'id':video.id}) }}">Edit</a> - <a href="{{ path('delete_video', {'id':video.id}) }}">Delete</a>
+    {% endfor %}
+{% endblock %}

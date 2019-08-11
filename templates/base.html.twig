@@ -4,8 +4,41 @@
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
+            <h1>VIDEOHUB</h1>
+            {% if is_granted('ROLE_ADMIN') %}
+               <ul>
+                   <li style="display: inline"><a href="{{ path('home') }}">Home</a> - </li>
+                   <li style="display: inline"><a href="{{ path('upload') }}">Upload a video</a> - </li>
+                   <li style="display: inline"><a href="{{ path('profile') }}">Profile</a> - </li>
+                   <li style="display: inline"><a href="{{ path('logout') }}">Logout</a></li>
+               </ul>
+               <ul>
+                   <li style="display: inline">Admin Panel : </li>
+                   <li style="display: inline"><a href="{{ path('admin') }}">Users administration</a> - </li>
+                   <li style="display: inline"><a href="{{ path('admin_videos') }}">Videos administration</a> - </li>
+                   <li style="display: inline"><a href="{{ path('admin_categories') }}">Categories administration</a></li>
+               </ul>
+          {% elseif is_granted('ROLE_USER') %}
+              <ul>
+                  <li style="display: inline"><a href="{{ path('home') }}">Home</a> - </li>
+                  <li style="display: inline"><a href="{{ path('upload') }}">Upload a video</a> - </li>
+                  <li style="display: inline"><a href="{{ path('profile') }}">Profile</a> - </li>
+                  <li style="display: inline"><a href="{{ path('logout') }}">Logout</a></li>
+              </ul>
+        {% else %}
+            <ul>
+                <li style="display: inline"><a href="{{ path('register') }}">Register</a> - </li>
+                <li style="display: inline"><a href="{{ path('login') }}">Login</a></li>
+            </ul>
+        {% endif %}
+        {% for messages in app.flashes %}
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        {% endfor %}
     </head>
     <body>
+
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
     </body>

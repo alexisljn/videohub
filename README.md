@@ -1,27 +1,10 @@
-## Getting Started
+## TP IPSSI SYMFONY - VIDEO HUB
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+Selon moi toutes les features marche, et ce au détriment d'une UI
+quasi inexistante.
 
-### Prerequisites
+J'ai rajouté à la racine du projet un symfonyweb.sql qui instancie la base avec quelques vidéos
+et 2 users.
 
-What things you need to install the software and how to install them?
-
-- [Docker CE](https://www.docker.com/community-edition)
-- [Docker Compose](https://docs.docker.com/compose/install)
-
-### Install
-
-- (optional) Create your `docker-compose.override.yml` file
-
-```bash
-cp docker-compose.override.yml.dist docker-compose.override.yml
-```
-> Notice : Check the file content. If other containers use the same ports, change yours.
-
-#### Init
-
-```bash
-cp .env.dist .env
-docker-compose up -d
-docker-compose exec --user=application web bash
-```
+A noter qu'en supprimant la table article par Doctrine, j'ai engendré la création d'une table
+migration_versions.

@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}No category videos{% endblock %}
+
+{% block body %}
+    <h1>No category</h1>
+    {% for video in videos %}
+            <p><a href="{{ path('video_id', {'id':video.id}) }}">{{ video.title }}</a></p>
+            <p>Uploaded by <a href="{{ path('user_id', {'id':video.user.id}) }}">{{ video.user.email }}</a></p>
+    {% endfor %}
+{% endblock %}

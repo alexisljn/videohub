@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Videohub{% endblock %}
+
+{% block body %}
+    <h1>Accueil</h1>
+     {% for category in categories %}
+        {% if category.videos|length > 0 %}
+            <h2><a href="{{ path('category_id', {'id':category.id}) }}">{{ category.title }}</a></h2>
+            {% for video in videos %}
+                {% if video.category is same as(category) %}
+                    {% for key in videoIds|keys %}
+                        {% if key is same as(video.id) %}
+                            <div>
+                                <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ videoIds[key] }}" frameborder="0"
+                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                <p><a href="{{ path('video_id', {'id':video.id}) }}">{{ video.title }}</a> -
+                            {% if video.user %}
+                                Author : <a href="{{ path('user_id', {'id':video.user.id}) }}">{{ video.user.email }}</a></p>
+                            {% else %}
+                                No author</p>
+                            {% endif %}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    {% endfor %}
+    {% if noCategoryVideos %}
+        <h2><a href="{{ path('no_category') }}">Sans catégorie</a></h2>
+        {% for video in noCategoryVideos %}
+            {% for key in videoIds|keys %}
+                {% if key is same as(video.id) %}
+                <div>
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ videoIds[key] }}" frameborder="0"
+                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <p><a href="{{ path('video_id', {'id':video.id}) }}">{{ video.title }}</a> -
+                {% endif %}
+            {% endfor %}
+            {% if video.user %}
+                Author : <a href="{{ path('user_id', {'id':video.user.id}) }}">{{ video.user.email }}</a></p>
+            {% else %}
+                No author</p>
+            {% endif %}
+            </div>
+        {% endfor %}
+    {% endif %}
+{#{% if showNullCat %}
+        <h2><a href="#">Sans catégorie</a></h2>
+        {% for video in videos %}
+            {% if video.category == null %}
+                <p><a href="{{ path('video_id', {'id':video.id}) }}">{{ video.title }}</a></p>
+                <p>Author : <a href="{{ path('user_id', {'id':video.user.id}) }}">{{ video.user.email }}</a></p>
+            {% endif %}
+        {% endfor %}
+    {%  endif %}#}
+{% endblock %}

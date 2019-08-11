@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ video.title }}{% endblock %}
+
+{% block body %}
+
+<h1>{{ video.title }}</h1>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ videoId }}" frameborder="0"
+            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    {% if video.user and video.description and video.category %}
+        <p>Author : <a href="{{ path('user_id', {'id':video.user.id}) }}">{{ video.user.email }}</a> - {{ video.description }} -
+        <a href="{{ path('category_id', {'id':video.category.id}) }}">{{ video.category.title }}</a></p>
+    {% elseif video.user and video.description %}
+        <p>Author : <a href="{{ path('user_id', {'id':video.user.id}) }}">{{ video.user.email }}</a> - {{ video.description }} - No category</p>
+    {% elseif video.user and video.category %}
+        <p>Author : <a href="{{ path('user_id', {'id':video.user.id}) }}">{{ video.user.email }}</a> -
+        <a href="{{ path('category_id', {'id':video.category.id}) }}">{{ video.category.title }}</a></p>
+    {% elseif video.description and video.category %}
+        <p>No Author - {{ video.description }} - <a href="{{ path('category_id', {'id':video.category.id}) }}">{{ video.category.title }}</a></p>
+    {% elseif video.description %}
+        <p>No Author - {{ video.description }} - No category</p>
+    {% elseif video.category %}
+        <p>No Author - <a href="{{ path('category_id', {'id':video.category.id}) }}">{{ video.category.title }}</a></p>
+    {% else %}
+        <p>No Author - No category</p>
+    {% endif %}
+
+    {% if video.user and video.user.id is same as(user.id) %}
+        <a href="{{ path('delete_video', {'id':video.id}) }}">Delete</a>
+    {% endif %}
+{% endblock %}

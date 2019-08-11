@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Users administration{% endblock %}
+
+{% block body %}
+    <h1>Add User</h1>
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+    <h1>Users List</h1>
+    {% for user in users %}
+        <div>
+            <a href="{{ path('admin_user', {'id': user.id}) }}">{{ user.email }}</a>
+            {% if user.firstname and user.lastname %}
+                {{ user.firstname }} {{ user.lastname }}
+            {% endif %}
+            {% if user.birthday %}
+                {{ user.birthday | date('d/m/Y') }}
+            {% endif %}
+            {%  if user.newsletter %}
+                User subscribed to newsletter
+            {% else %}
+                User doesn't subscribed to newsletter
+            {% endif %}
+            Published videos :
+            {% for key in publishedVideos|keys %}
+                {% if key is same as(user.id) %}
+                    {{ publishedVideos[key]|length }}
+                {% endif %}
+            {% endfor %}
+            Unpublished videos :
+            {% for key in unpublishedVideos|keys %}
+                {% if key is same as(user.id) %}
+                    {{ unpublishedVideos[key]|length }}
+                {% endif %}
+            {% endfor %}
+            <a href="{{ path('delete_user', {'id': user.id}) }}">Delete</a>
+        </div>
+    {% endfor %}
+{% endblock %}

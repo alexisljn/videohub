@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Videos Administration{% endblock %}
+
+{% block body %}
+    <h1>Videos</h1>
+    {% for category in categories %}
+       <h2>{{ category.title }}</h2>
+        {% if category.description %}
+            <p>Description : {{ category.description }}</p>
+        {% endif %}
+        {% for video in videos %}
+            {% if video.category is same as (category) %}
+                <p><a href="{{ path('video_id', {'id':video.id}) }}">{{ video.title }}</a>
+                {% if video.user %}
+                    Author : <a href="{{ path('user_id', {'id':video.user.id}) }}">{{ video.user.email }}</a>
+                {% else %}
+                    No author
+                {% endif %}
+                    <a href="{{ path('admin_video', {'id': video.id}) }}">Edit</a> <a href="{{ path('admin_delete_video', {'id': video.id}) }}">Delete</a></p>
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+
+    {% if showNullCat %}
+        <h2>Sans catégorie</h2>
+        {% for video in videos %}
+            {% if video.category == null %}
+                <p><a href="{{ path('video_id', {'id':video.id}) }}">{{ video.title }}</a>
+                {% if video.user %}
+                    Author : <a href="{{ path('user_id', {'id':video.user.id}) }}">{{ video.user.email }}</a>
+                {% else %}
+                    No author
+                {% endif %}
+                <a href="{{ path('admin_video', {'id': video.id}) }}">Edit</a> <a href="{{ path('admin_delete_video', {'id': video.id}) }}">Delete</a></p>
+            {% endif %}
+        {% endfor %}
+    {%  endif %}
+
+{% endblock %}

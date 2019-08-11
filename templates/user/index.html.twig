@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ user.email }}{% endblock %}
+
+{% block body %}
+    <h1>{{ user.email }}</h1>
+    {% if user.firstname and user.lastname %}
+        <p>{{ user.firstname }} {{ user.lastname }}</p>
+    {% elseif user.firstname %}
+        <p>{{ user.firstname }}</p>
+    {% elseif user.lastname %}
+        <p>{{ user.lastname }}</p>
+    {% endif %}
+    {% if user.birthday %}
+       <p>Birthday : {{ user.birthday | date('d/m/Y') }}</p>
+    {% endif %}
+    {% if user.videos|length > 0 %}
+        <h2>Videos</h2>
+        {% for video in user.videos %}
+            {% if video.published %}
+                <p><a href="{{ path('video_id', {'id':video.id}) }}">{{ video.title }}</a></p>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endblock %}

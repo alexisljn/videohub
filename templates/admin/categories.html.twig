@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Categories Administration{% endblock %}
+
+{% block body %}
+<h1>Add Category</h1>
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+
+    {% for category in categories %}
+        <h2><a href="{{ path('admin_category', {'id': category.id}) }}">{{ category.title }}</a></h2>
+        {% if category.description %}
+            {{ category.description }}
+        {% endif %}
+        {% for video in category.videos %}
+            {{ video.title }}
+        {% endfor %}
+        <a href="{{ path('delete_category', {"id": category.id}) }}">Delete</a>
+    {% endfor %}
+
+{% endblock %}

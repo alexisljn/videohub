@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ video.title }}{% endblock %}
+
+{% block body %}
+<h1>Edit Video</h1>
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+    <a href="{{ path('admin_delete_video', {'id': video.id}) }}">Delete</a>
+{% endblock %}
